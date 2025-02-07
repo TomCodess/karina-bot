@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/TomCodess/karina-bot#readme",
   "dependencies": {
-    "discord.js": "^14.17.3"
+    "discord.js": "^14.17.3",
+    "dotenv": "^16.4.7",
+    "mongodb": "^6.13.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",

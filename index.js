@@ -1,7 +1,10 @@
-const fs = require('node:fs');
-const path = require('node:path');
-const { Client, Collection, Events, GatewayIntentBits, MessageFlags } = require('discord.js');
+require('dotenv').config();
+const { Client, GatewayIntentBits, Events, Collection } = require('discord.js');
+const fs = require('fs');
+const path = require('path');
+const { MongoClient } = require('mongodb');
 const { token } = require('./config.json');
+
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
