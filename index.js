@@ -2,7 +2,7 @@ require('dotenv').config();
 const { Client, GatewayIntentBits, Events, Collection } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
-const { MongoClient } = require('mongodb');
+// const { MongoClient } = require('mongodb');
 const { token } = require('./config.json');
 
 
