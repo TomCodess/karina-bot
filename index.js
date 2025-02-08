@@ -7,11 +7,12 @@ const { token } = require('./config.json');
 
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
-
+//
 client.commands = new Collection();
 const foldersPath = path.join(__dirname, 'commands');
 const commandFolders = fs.readdirSync(foldersPath);
 
+// initialize the commands in the commands folder
 for (const folder of commandFolders) {
 	const commandsPath = path.join(foldersPath, folder);
 	const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
@@ -25,6 +26,7 @@ for (const folder of commandFolders) {
 		}
 	}
 }
+
 
 client.once(Events.ClientReady, readyClient => {
 	console.log(`Ready! Logged in as ${readyClient.user.tag}`);
