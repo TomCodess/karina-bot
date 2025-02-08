@@ -6,6 +6,7 @@ module.exports = {
 		.setName('initializeprofile')
 		.setDescription('Initializes your profile in the database'),
 	async execute(interaction) {
+		// Create a MongoClient with a MongoClientOptions object to set the Stable API version
 		const uri = process.env.MONGODB_CONNECTION_STRING;
 		const client = new MongoClient(uri, {
 			serverApi: {
@@ -26,6 +27,7 @@ module.exports = {
 			if (existingProfile) {
 				await interaction.reply('You already have a profile!');
 			} else {
+				// schema for the profile of a user in the database
 				const newProfile = {
 					discordId: userId,
 					joinedBotDate: new Date(),
