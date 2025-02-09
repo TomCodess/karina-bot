@@ -1,35 +1,55 @@
-/* eslint-disable no-inline-comments */
 // commands/work.js
 
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { CommandInteraction } = require('discord.js');
-const { Users } = require('../models'); // Assuming you have a Users model for your database
+const { MongoClient, ServerApiVersion } = require('mongodb');
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('work')
 		.setDescription('Work to earn coins. Can be used every 5 minutes.'),
 	async execute(interaction) {
-		const userId = interaction.user.id;
-		const user = await Users.findOne({ where: { userId } });
+		const uri = process.env.MONGODB_CONNECTION_STRING;
+		const client = new MongoClient(uri, {
+			serverApi: {
+				version: ServerApiVersion.v1,
+				strict: true,
+				deprecationErrors: true,
+			},
+		});
 
-		if (!user) {
-			return interaction.reply('You need to set up a profile first!');
+		try {
+			await client.connect();
+			const database = client.db('discordBot');
+			const profiles = database.collection('profiles');
+
+			const userId = interaction.user.id;
+			const user = await profiles.findOne({ discordId: userId });
+
+			if (!user) {
+				return interaction.reply('You need to set up a profile first!');
+			}
+
+			const lastWork = user.lastWork || 0;
+			const now = Date.now();
+
+			if (now - lastWork < 5 * 60 * 1000) {
+				return interaction.reply('You can only use this command every 5 minutes.');
+			}
+
+			const coins = Math.floor(Math.random() * 51) + 50; // Random amount between 50 and 100
+			const newBalance = (user.balance || 0) + coins;
+			const updateDoc = {
+				$set: {
+					balance: newBalance,
+					lastWork: now,
+				},
+			};
+
+			await profiles.updateOne({ discordId: userId }, updateDoc);
+
+			return interaction.reply(`You worked and earned ${coins} coins! Your new balance is ${newBalance} coins.`);
+		} finally {
+			await client.close();
 		}
-
-		const lastWork = user.lastWork || 0;
-		const now = Date.now();
-
-		if (now - lastWork < 5 * 60 * 1000) {
-			return interaction.reply('You can only use this command every 5 minutes.');
-		}
-
-		const coins = Math.floor(Math.random() * 51) + 50; // Random amount between 50 and 100
-		user.balance += coins;
-		user.lastWork = now;
-
-		await user.save();
-
-		return interaction.reply(`You worked and earned ${coins} coins! Your new balance is ${user.balance} coins.`);
 	},
 };
