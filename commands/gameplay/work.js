@@ -1,3 +1,4 @@
+/* eslint-disable no-inline-comments */
 // commands/work.js
 
 const { SlashCommandBuilder } = require('@discordjs/builders');
