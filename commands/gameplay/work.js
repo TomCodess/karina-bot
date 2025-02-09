@@ -2,7 +2,7 @@
 // commands/work.js
 
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient } = require('mongodb');
 
 module.exports = {
 	data: new SlashCommandBuilder()
