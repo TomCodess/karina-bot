@@ -36,7 +36,7 @@ module.exports = {
 			if (now - lastWork < 5 * 60 * 1000) {
 				return interaction.reply('You can only use this command every 5 minutes.');
 			}
-            //
+			//
 			if (now - lastWork < cooldown) {
 				const remainingTime = cooldown - (now - lastWork);
 				const minutes = Math.floor(remainingTime / 60000);
