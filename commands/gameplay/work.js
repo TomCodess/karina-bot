@@ -36,6 +36,13 @@ module.exports = {
 			if (now - lastWork < 5 * 60 * 1000) {
 				return interaction.reply('You can only use this command every 5 minutes.');
 			}
+            //
+			if (now - lastWork < cooldown) {
+				const remainingTime = cooldown - (now - lastWork);
+				const minutes = Math.floor(remainingTime / 60000);
+				const seconds = Math.floor((remainingTime % 60000) / 1000);
+				return interaction.reply(`You can only use this command every 5 minutes. Please wait ${minutes} minutes and ${seconds} seconds.`);
+			}
 
 			const coins = Math.floor(Math.random() * 51) + 50; // Random amount between 50 and 100
 			const newBalance = (user.balance || 0) + coins;
