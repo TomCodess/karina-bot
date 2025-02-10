@@ -39,7 +39,7 @@ module.exports = {
 				const remainingTime = cooldown - (now - lastWork);
 				const minutes = Math.floor(remainingTime / 60000);
 				const seconds = Math.floor((remainingTime % 60000) / 1000);
-				return interaction.reply(`You can only use this command every 5 minutes. Please wait ${minutes} minutes and ${seconds} seconds.`);
+				return interaction.reply(`You can work again in ${minutes} minutes and ${seconds} seconds.`);
 			}
 
 			const coins = Math.floor(Math.random() * 51) + 50; // Random amount between 50 and 100
