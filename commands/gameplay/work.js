@@ -42,7 +42,8 @@ module.exports = {
 				return interaction.reply(`You can work again in ${minutes} minutes and ${seconds} seconds.`);
 			}
 
-			const coins = Math.floor(Math.random() * 51) + 50; // Random amount between 50 and 100
+			// Random amount between 50 and 100
+			const coins = Math.floor(Math.random() * 51) + 50;
 			const newBalance = (user.balance || 0) + coins;
 			const updateDoc = {
 				$set: {
