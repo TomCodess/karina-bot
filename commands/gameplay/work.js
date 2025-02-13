@@ -6,7 +6,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('work')
+		.setName('coins')
 		.setDescription('Work to earn coins. Can be used every 5 minutes.'),
 	async execute(interaction) {
 		const uri = process.env.MONGODB_CONNECTION_STRING;
