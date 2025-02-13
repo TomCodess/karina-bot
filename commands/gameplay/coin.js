@@ -10,6 +10,7 @@ module.exports = {
 		.setDescription('Work to earn coins. Can be used every 5 minutes.'),
 	async execute(interaction) {
 		const uri = process.env.MONGODB_CONNECTION_STRING;
+		// Connnect to MongoDB
 		const client = new MongoClient(uri, {
 			serverApi: {
 				version: ServerApiVersion.v1,
