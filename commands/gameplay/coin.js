@@ -1,5 +1,5 @@
 /* eslint-disable no-inline-comments */
-// commands/work.js
+// commands /coin.js
 
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MongoClient, ServerApiVersion } = require('mongodb');
