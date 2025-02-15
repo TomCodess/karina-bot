@@ -30,7 +30,8 @@ module.exports = {
 			const lastWork = user.lastWork || 0;
 			const now = Date.now();
 
-			const cooldown = 5 * 60 * 1000; // 5 minutes in milliseconds
+			// 5 minutes in milliseconds
+			const cooldown = 5 * 60 * 1000;
 
 			if (now - lastWork < cooldown) {
 				const remainingTime = cooldown - (now - lastWork);
