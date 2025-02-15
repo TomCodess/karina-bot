@@ -27,7 +27,6 @@ module.exports = {
 				return interaction.reply('You need to set up a profile first!');
 			}
 
-            
 
 			await profiles.updateOne({ discordId: userId }, updateDoc);
 
