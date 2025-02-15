@@ -26,10 +26,10 @@ module.exports = {
 
 			// Insert new user into database
 			await db.query('INSERT INTO users (user_id, username, created_at) VALUES ($1, $2, NOW())', [userId, username]);
-			return interaction.reply({ content: '🎉 Profile successfully initialized! You can now start collecting photocards.', ephemeral: true });
+			return interaction.channel.send({ content: '🎉 Profile successfully initialized! You can now start collecting photocards.', ephemeral: true });
 		} catch (error) {
 			console.error('Database Error:', error);
-			return interaction.reply({ content: '❌ An error occurred while initializing your profile.', ephemeral: true });
+			return interaction.channel.send({ content: '❌ An error occurred while initializing your profile.', ephemeral: true });
 		}
 	},
 };

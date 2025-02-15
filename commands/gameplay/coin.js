@@ -1,63 +1,35 @@
-/* eslint-disable no-inline-comments */
-// commands /coin.js
+const { SlashCommandBuilder } = require('discord.js');
+const { Pool } = require('pg');
+require('dotenv').config();
 
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+// Setup PostgreSQL Connection
+const db = new Pool({ connectionString: process.env.DATABASE_URL });
+
+db.connect()
+	.then(() => console.log('✅ Connected to Neon PostgreSQL'))
+	.catch(err => console.error('❌ Database Connection Error:', err));
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('coins')
-		.setDescription('Work to earn coins. Can be used every 5 minutes.'),
+		.setName('initializeprofile')
+		.setDescription('Initializes your profile for the photocard trading system.'),
 	async execute(interaction) {
-		const uri = process.env.MONGODB_CONNECTION_STRING;
-		// Connnect to MongoDB
-		const client = new MongoClient(uri, {
-			serverApi: {
-				version: ServerApiVersion.v1,
-				strict: true,
-				deprecationErrors: true,
-			},
-		});
+		const userId = interaction.user.id;
+		const username = interaction.user.username;
 
 		try {
-			await client.connect();
-			const database = client.db('discordBot');
-			const profiles = database.collection('profiles');
-
-			const userId = interaction.user.id;
-			const user = await profiles.findOne({ discordId: userId });
-
-			if (!user) {
-				return interaction.reply('You need to set up a profile first!');
+			// Check if the user already exists
+			const checkUser = await db.query('SELECT * FROM users WHERE user_id = $1', [userId]);
+			if (checkUser.rows.length > 0) {
+				return interaction.reply({ content: '✅ You are already registered!', ephemeral: true });
 			}
 
-			const lastCoin = user.lastCoin || 0;
-			const now = Date.now();
-
-			const cooldown = 5 * 60 * 1000; // 5 minutes in milliseconds
-
-			if (now - lastCoin < cooldown) {
-				const remainingTime = cooldown - (now - lastCoin);
-				const minutes = Math.floor(remainingTime / 60000);
-				const seconds = Math.floor((remainingTime % 60000) / 1000);
-				return interaction.reply(`You can work again in ${minutes} minutes and ${seconds} seconds.`);
-			}
-
-			// Random amount between 50 and 100
-			const coins = Math.floor(Math.random() * 51) + 50;
-			const newBalance = (user.balance || 0) + coins;
-			const updateDoc = {
-				$set: {
-					balance: newBalance,
-					lastCoin: now,
-				},
-			};
-
-			await profiles.updateOne({ discordId: userId }, updateDoc);
-
-			return interaction.reply(`You worked and earned ${coins} coins! Your new balance is ${newBalance} coins.`);
-		} finally {
-			await client.close();
+			// Insert new user into database
+			await db.query('INSERT INTO users (user_id, username, created_at) VALUES ($1, $2, NOW())', [userId, username]);
+			return interaction.channel.send({ content: '🎉 Profile successfully initialized! You can now start collecting photocards.', ephemeral: true });
+		} catch (error) {
+			console.error('Database Error:', error);
+			return interaction.channel.send({ content: '❌ An error occurred while initializing your profile.', ephemeral: true });
 		}
 	},
 };
