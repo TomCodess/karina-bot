@@ -1,49 +1,35 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { SlashCommandBuilder } = require('discord.js');
+const { Pool } = require('pg');
+require('dotenv').config();
+
+// Setup PostgreSQL Connection
+const db = new Pool({ connectionString: process.env.DATABASE_URL });
+
+db.connect()
+	.then(() => console.log('✅ Connected to Neon PostgreSQL'))
+	.catch(err => console.error('❌ Database Connection Error:', err));
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('initializeprofile')
-		.setDescription('Initializes your profile in the database'),
+		.setDescription('Initializes your profile for the photocard trading system.'),
 	async execute(interaction) {
-		// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-		const uri = process.env.MONGODB_CONNECTION_STRING;
-		const client = new MongoClient(uri, {
-			serverApi: {
-				version: ServerApiVersion.v1,
-				strict: true,
-				deprecationErrors: true,
-			},
-		});
+		const userId = interaction.user.id;
+		const username = interaction.user.username;
 
 		try {
-			await client.connect();
-			const database = client.db('discordBot');
-			const profiles = database.collection('profiles');
-
-			const userId = interaction.user.id;
-			const existingProfile = await profiles.findOne({ discordId: userId });
-
-			if (existingProfile) {
-				await interaction.reply('You already have a profile!');
-			} else {
-				// schema for the profile of a user in the database
-				const newProfile = {
-					discordId: userId,
-					joinedBotDate: new Date(),
-					bio: '',
-					balance: 0,
-					inventory: [],
-				};
-
-				await profiles.insertOne(newProfile);
-				await interaction.reply('Your profile has been initialized!');
+			// Check if the user already exists
+			const checkUser = await db.query('SELECT * FROM users WHERE user_id = $1', [userId]);
+			if (checkUser.rows.length > 0) {
+				return interaction.reply({ content: '✅ You are already registered!', ephemeral: true });
 			}
+
+			// Insert new user into database
+			await db.query('INSERT INTO users (user_id, username, created_at) VALUES ($1, $2, NOW())', [userId, username]);
+			return interaction.reply({ content: '🎉 Profile successfully initialized! You can now start collecting photocards.', ephemeral: true });
 		} catch (error) {
-			console.error(error);
-			await interaction.reply('There was an error initializing your profile.');
-		} finally {
-			await client.close();
+			console.error('Database Error:', error);
+			return interaction.reply({ content: '❌ An error occurred while initializing your profile.', ephemeral: true });
 		}
 	},
 };
