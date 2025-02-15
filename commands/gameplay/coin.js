@@ -31,28 +31,22 @@ module.exports = {
 			const currentTime = new Date();
 
 			// Check if 5 minutes have passed since the last claim
-            if (currentTime - lastClaimTime < 5 * 60 * 1000) {
-                // If it's been less than 5 minutes
-                const timeRemaining = Math.ceil((5 * 60 * 1000 - (currentTime - lastClaimTime)) / 1000);
-                return interaction.reply({ content: `⏳ You can claim your coins again in ${timeRemaining} seconds.` });
-            }
-
-			const lastWork = user.lastWork || 0;
-			const now = Date.now();
-
-			// 5 minutes in milliseconds
-			const cooldown = 5 * 60 * 1000;
-
-			if (now - lastWork < cooldown) {
-				const remainingTime = cooldown - (now - lastWork);
-				const minutes = Math.floor(remainingTime / 60000);
-				const seconds = Math.floor((remainingTime % 60000) / 1000);
-				return interaction.reply(`You can work again in ${minutes} minutes and ${seconds} seconds.`);
+			if (currentTime - lastClaimTime < 5 * 60 * 1000) {
+				// If it's been less than 5 minutes
+				const timeRemaining = Math.ceil((5 * 60 * 1000 - (currentTime - lastClaimTime)) / 1000);
+				return interaction.reply({ content: `⏳ You can claim your coins again in ${timeRemaining} seconds.` });
 			}
 
-			// Insert new user into database
-			await db.query('INSERT INTO users (user_id, username, created_at) VALUES ($1, $2, NOW())', [userId, username]);
-			return interaction.channel.send({ content: '🎉 Profile successfully initialized! You can now start collecting photocards.', ephemeral: true });
+			// Generate a random number between 1 and 10 for the coin reward
+			const coinsToAdd = Math.floor(Math.random() * 10) + 1;
+
+			// Update the user's coin balance and set the last claimed time
+			await db.query(
+				'UPDATE users SET coin_balance = coin_balance + $1, last_claimed = NOW() WHERE user_id = $2',
+				[coinsToAdd, userId],
+			);
+
+			return interaction.reply({ content: `🎉 You claimed ${coinsToAdd} coins! Your new balance is ${coin_balance + coinsToAdd} coins.` });
 		} catch (error) {
 			console.error('Database Error:', error);
 			return interaction.channel.send({ content: '❌ An error occurred while using the command.', ephemeral: true });
