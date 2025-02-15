@@ -31,13 +31,13 @@ module.exports = {
 				return interaction.reply('You need to set up a profile first!');
 			}
 
-			const lastWork = user.lastWork || 0;
+			const lastCoin = user.lastCoin || 0;
 			const now = Date.now();
 
 			const cooldown = 5 * 60 * 1000; // 5 minutes in milliseconds
 
-			if (now - lastWork < cooldown) {
-				const remainingTime = cooldown - (now - lastWork);
+			if (now - lastCoin < cooldown) {
+				const remainingTime = cooldown - (now - lastCoin);
 				const minutes = Math.floor(remainingTime / 60000);
 				const seconds = Math.floor((remainingTime % 60000) / 1000);
 				return interaction.reply(`You can work again in ${minutes} minutes and ${seconds} seconds.`);
@@ -49,7 +49,7 @@ module.exports = {
 			const updateDoc = {
 				$set: {
 					balance: newBalance,
-					lastWork: now,
+					lastCoin: now,
 				},
 			};
 
