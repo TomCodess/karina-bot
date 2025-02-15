@@ -27,14 +27,14 @@ module.exports = {
 				return interaction.reply('You need to set up a profile first!');
 			}
 
-			const lastWork = user.lastWork || 0;
+			const lastRoll = user.lastRoll || 0;
 			const now = Date.now();
 
 			// 5 minutes in milliseconds
 			const cooldown = 5 * 60 * 1000;
 
-			if (now - lastWork < cooldown) {
-				const remainingTime = cooldown - (now - lastWork);
+			if (now - lastRoll < cooldown) {
+				const remainingTime = cooldown - (now - lastRoll);
 				const minutes = Math.floor(remainingTime / 60000);
 				const seconds = Math.floor((remainingTime % 60000) / 1000);
 				return interaction.reply(`You can work again in ${minutes} minutes and ${seconds} seconds.`);
@@ -46,7 +46,7 @@ module.exports = {
 			const updateDoc = {
 				$set: {
 					balance: newBalance,
-					lastWork: now,
+					lastRoll: now,
 				},
 			};
 
