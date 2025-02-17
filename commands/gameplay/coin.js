@@ -22,8 +22,14 @@ module.exports = {
 		// Check cooldown
 		const lastUsed = cooldowns.get(userId);
 		if (lastUsed && Date.now() - lastUsed < COOLDOWN_TIME) {
-			const timeleft = lastUsed && Date.now() - lastUsed;
-			return interaction.channel.send({ content: '⏳ You must wait 5 seconds before using /coin again!', ephemeral: true });
+			const timeRemainingMs = COOLDOWN_TIME - (Date.now() - lastUsed);
+			const minutes = Math.floor(timeRemainingMs / 60000);
+			const seconds = Math.ceil((timeRemainingMs % 60000) / 1000);
+
+			return interaction.reply({
+				content: `⏳ You must wait ${minutes}m ${seconds}s before using /coin again!`,
+				ephemeral: true,
+			});
 		}
 		cooldowns.set(userId, Date.now());
 
