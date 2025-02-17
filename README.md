@@ -2,7 +2,7 @@
 
 ## 🤔 About
 
-Gehlee is a **K-Pop Card Collection Bot** designed to bring the excitement of trading, collecting, and showcasing K-Pop idol cards right into your Discord server! With tons of cards to collect, features to explore, and a thriving community to engage with, Gehlee offers a unique experience for K-Pop enthusiasts and collectors alike.
+Karina is a **K-Pop Card Collection Bot** designed to bring the excitement of trading, collecting, and showcasing K-Pop idol cards right into your Discord server! With tons of cards to collect, features to explore, and a thriving community to engage with, Gehlee offers a unique experience for K-Pop enthusiasts and collectors alike.
 
 ---
 
