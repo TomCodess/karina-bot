@@ -2,7 +2,7 @@
 
 ## 🤔 About
 
-Karina is a **K-Pop Card Collection Bot** designed to bring the excitement of trading, collecting, and showcasing K-Pop idol cards right into your Discord server! With tons of cards to collect, features to explore, and a thriving community to engage with, Gehlee offers a unique experience for K-Pop enthusiasts and collectors alike.
+Karina is a **K-Pop Card Collection Bot** designed to bring the excitement of trading, collecting, and showcasing K-Pop idol cards right into your Discord server! With tons of cards to collect, features to explore, and a thriving community to engage with, Karina offers a unique experience for K-Pop enthusiasts and collectors alike.
 
 ---
 
@@ -16,7 +16,7 @@ Karina is a **K-Pop Card Collection Bot** designed to bring the excitement of tr
 - **✨ Special Events:** Participate in limited-time events to grab exclusive cards.
 - **🎨 Customizable Profiles:** Personalize your profile to showcase your unique K-Pop style.
 - **📂 Album Organization:** Arrange your cards into albums to keep your collection organized.
-- **💬 Community Interaction:** Engage with other fans in Gehlee-supported Discord servers.
+- **💬 Community Interaction:** Engage with other fans in Karina-supported Discord servers.
 
 ---
 
@@ -28,8 +28,8 @@ Karina is a **K-Pop Card Collection Bot** designed to bring the excitement of tr
 
 ## 🚀 Getting Started
 
-### Invite Gehlee to Your Server
-1. Click [here](#) to invite Gehlee to your Discord server.
+### Invite Karina to Your Server
+1. Click [here](#) to invite Karina to your Discord server.
 2. Grant the necessary permissions.
 3. Start collecting cards and interacting with your community!
 
@@ -50,7 +50,7 @@ Karina is a **K-Pop Card Collection Bot** designed to bring the excitement of tr
 
 ## 🤝 Contribution
 
-We welcome contributions to make Gehlee even better! Feel free to fork the project, make your changes, and open a pull request.
+We welcome contributions to make Karina even better! Feel free to fork the project, make your changes, and open a pull request.
 
 ### Ideas for Contribution
 - Suggest new card themes or features.
@@ -61,7 +61,7 @@ We welcome contributions to make Gehlee even better! Feel free to fork the proje
 
 ## 💌 Support
 
-If you love Gehlee and want to support its development, consider:
+If you love Karina and want to support its development, consider:
 - Giving the repository a ⭐ on GitHub.
 - Sharing it with your friends and community.
 - [Donating](#) to help keep the project alive.
@@ -77,7 +77,7 @@ This project is licensed under the [MIT License](LICENSE).
 ## 🖤 Acknowledgements
 
 - Inspired by K-Pop and the amazing global fanbase.
-- Thanks to all contributors and testers for making Gehlee awesome.
+- Thanks to all contributors and testers for making Karina awesome.
 - Shoutout to the developers of [Discord.js](https://discord.js.org/) and all other libraries used in this project.
 
 ---
