@@ -86,5 +86,5 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 <div align="center">
-  Made with ❤️ by Enyzelle
+  Made with ❤️ by AiRz
 </div>
