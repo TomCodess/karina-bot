@@ -61,11 +61,6 @@ module.exports = {
 				value: `![${card.idol_name}](${`attachment://${attachmentName}`})`,
 			});
 
-			embed.addFields({
-				name: `Card ${index + 1} Image`,
-				value: `![${card.idol_name}](${`attachment://${attachmentName}`})`,
-			});
-
 			buttons.addComponents(
 				new ButtonBuilder()
 					.setCustomId(`select_card_${index}`)
