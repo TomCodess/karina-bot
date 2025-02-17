@@ -2,6 +2,7 @@
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const { Pool } = require('pg');
 const fs = require('fs');
+const path = require('path');
 require('dotenv').config();
 
 const db = new Pool({ connectionString: process.env.DATABASE_URL });
@@ -36,8 +37,22 @@ module.exports = {
 			.setColor('#FFD700');
 
 		const buttons = new ActionRowBuilder();
+
+		const imageFiles = [];
+
 		selectedCards.forEach((card, index) => {
-			embed.addFields({ name: `${index + 1}. ${card.idol_name} (${card.collection})`, value: `✿ **Group**: ${card.group}\n✿ **Rarity**: ${card.rarity}  ${card.image}` });
+			// Assuming your images are stored in a folder called 'images' in your project directory
+		    const imagePath = path.join('/Users/tchen/karina-bot/', `${card.image}`);
+			// console.log(card.image);
+			// if (fs.existsSync(imagePath)) {
+			// 	console.log('yes');
+			// } else {
+			// 	console.log('no');
+			// }
+
+			embed.addFields({ name: `${index + 1}. ${card.idol_name} (${card.collection})`,
+				value: `✿ **Group**: ${card.group}\n✿ **Rarity**: ${card.rarity}` });
+
 			buttons.addComponents(
 				new ButtonBuilder()
 					.setCustomId(`select_card_${index}`)
