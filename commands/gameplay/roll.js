@@ -37,7 +37,7 @@ module.exports = {
 
 		const buttons = new ActionRowBuilder();
 		selectedCards.forEach((card, index) => {
-			embed.addFields({ name: `${index + 1}. ${card.idol_name} (${card.collection})`, value: `✿ **Group**: ${card.group}\n✿ **Rarity**: ${card.rarity}` });
+			embed.addFields({ name: `${index + 1}. ${card.idol_name} (${card.collection})`, value: `✿ **Group**: ${card.group}\n✿ **Rarity**: ${card.rarity}  ${card.image}` });
 			buttons.addComponents(
 				new ButtonBuilder()
 					.setCustomId(`select_card_${index}`)
