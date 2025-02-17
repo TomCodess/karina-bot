@@ -30,7 +30,7 @@ module.exports = {
 			const seconds = Math.ceil((timeRemainingMs % 60000) / 1000);
 
 			return interaction.channel.send({
-				content: `⏳ You must wait **\`${minutes}m ${seconds}s\`** before using /coin again!`,
+				content: `⏳ You must wait **\`${minutes} minutes and ${seconds} seconds\`** before using /coin again!`,
 				ephemeral: true,
 			});
 		}
