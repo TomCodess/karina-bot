@@ -50,8 +50,13 @@ module.exports = {
 			// 	console.log('no');
 			// }
 
-			embed.addFields({ name: `${index + 1}. ${card.idol_name} (${card.collection})`,
-				value: `✿ **Group**: ${card.group}\n✿ **Rarity**: ${card.rarity}` });
+			embed.addFields({
+				name: `${index + 1}. ${card.idol_name} (${card.collection})`,
+				value: `✿ **Group**: ${card.group}\n✿ **Rarity**: ${card.rarity}`,
+			});
+			imageFiles.push({
+				attachment: imagePath,
+			});
 
 			buttons.addComponents(
 				new ButtonBuilder()
