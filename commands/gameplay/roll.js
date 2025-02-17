@@ -43,19 +43,27 @@ module.exports = {
 		selectedCards.forEach((card, index) => {
 			// Assuming your images are stored in a folder called 'images' in your project directory
 		    const imagePath = path.join('/Users/tchen/karina-bot/', `${card.image}`);
-			// console.log(card.image);
-			// if (fs.existsSync(imagePath)) {
-			// 	console.log('yes');
-			// } else {
-			// 	console.log('no');
-			// }
 
 			embed.addFields({
 				name: `${index + 1}. ${card.idol_name} (${card.collection})`,
 				value: `✿ **Group**: ${card.group}\n✿ **Rarity**: ${card.rarity}`,
 			});
+
+			const attachmentName = `${card.idol_name.toLowerCase().replace(/\s+/g, '_')}_whiplash.jpeg`;
 			imageFiles.push({
 				attachment: imagePath,
+				name: attachmentName,
+			});
+
+			// Add the image to the embed using attachment URL
+			embed.addFields({
+				name: `Card ${index + 1} Image`,
+				value: `![${card.idol_name}](${`attachment://${attachmentName}`})`,
+			});
+
+			embed.addFields({
+				name: `Card ${index + 1} Image`,
+				value: `![${card.idol_name}](${`attachment://${attachmentName}`})`,
 			});
 
 			buttons.addComponents(
@@ -66,7 +74,7 @@ module.exports = {
 			);
 		});
 
-		const message = await interaction.reply({ embeds: [embed], components: [buttons], fetchReply: true });
+		const message = await interaction.reply({ embeds: [embed], files: imageFiles, components: [buttons], fetchReply: true });
 
 		const collector = message.createMessageComponentCollector({ time: 60000 });
 		collector.on('collect', async (buttonInteraction) => {
