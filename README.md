@@ -1,13 +1,4 @@
-# Gehlee - The Ultimate K-Pop Card Collection Bot 🎤✨
-
-<div align="center">
-  <img src="gehlee_banner.png" alt="Gehlee Banner" width="250"/>
-  
-  [![License](https://img.shields.io/github/license/Enyzelle/Gehlee)](https://github.com/Enyzelle/Gehlee/blob/main/LICENSE)
-  [![Stars](https://img.shields.io/github/stars/Enyzelle/Gehlee)](https://github.com/Enyzelle/Gehlee/stargazers)
-  [![Issues](https://img.shields.io/github/issues/Enyzelle/Gehlee)](https://github.com/Enyzelle/Gehlee/issues)
-  [![Discord](https://img.shields.io/discord/1322138276932616252)](https://discord.gg/ggsas)
-</div>
+# Karina - The K-Pop Card Collection Bot 🎤✨
 
 ## 🤔 About
 
