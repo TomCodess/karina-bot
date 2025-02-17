@@ -9,7 +9,7 @@ const db = new Pool({ connectionString: process.env.DATABASE_URL });
 // Cooldown tracking
 const cooldowns = new Map();
 /**
- * CHANGE TIME FOR COOLDOWN HERE
+ * CHANGE TIME FOR COOLDOWN
  */
 const COOLDOWN_TIME = 5 * 60 * 1000; // 5 minutes (300,000 ms)
 
@@ -30,7 +30,7 @@ module.exports = {
 			const seconds = Math.ceil((timeRemainingMs % 60000) / 1000);
 
 			return interaction.channel.send({
-				content: `⏳ You must wait ${minutes}m ${seconds}s before using /coin again!`,
+				content: `⏳ You must wait **\`${minutes}m ${seconds}s\`** before using /coin again!`,
 				ephemeral: true,
 			});
 		}
