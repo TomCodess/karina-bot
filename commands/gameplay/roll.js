@@ -14,6 +14,39 @@ const ROLL_COOLDOWN = 300000; // 5 minutes
 // Load master card list
 const masterCardList = JSON.parse(fs.readFileSync('masterCardList.json'));
 
+// Function to get a random selection of images
+function getRandomImages(folder, count) {
+	const files = fs.readdirSync(folder).filter(file => /\.(png|jpg|jpeg)$/i.test(file)); // Get all image files
+	if (files.length < count) {
+		console.error('Not enough images in the folder.');
+		return [];
+	}
+	return files.sort(() => Math.random() - 0.5).slice(0, count).map(file => path.join(folder, file));
+}
+
+// Function to stitch images horizontally
+async function stitchImagesHorizontally(imagePaths, outputPath) {
+	try {
+		const images = await Promise.all(imagePaths.map(img => sharp(img).resize(300, 400).toBuffer()));
+
+		await sharp({
+			create: {
+				width: images.length * 300,
+				height: 400,
+				channels: 4,
+				background: { r: 255, g: 255, b: 255, alpha: 0 },
+			},
+		})
+			.composite(images.map((img, i) => ({ input: img, left: i * 300, top: 0 })))
+			.toFile(outputPath);
+
+		return outputPath; // Return path for Discord upload
+	} catch (error) {
+		console.error('Error stitching images:', error);
+		return null;
+	}
+}
+
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('roll')
