@@ -66,7 +66,7 @@ module.exports = {
 		// Reply with the embed and image attachments
 		return interaction.reply({
 			embeds: [embed],
-			files: imageFiles, // Attach all found images
+			files: imageFiles, 
 		});
 	},
 };
