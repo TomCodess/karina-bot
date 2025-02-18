@@ -3,6 +3,8 @@ const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, Butt
 const { Pool } = require('pg');
 const fs = require('fs');
 const path = require('path');
+const sharp = require('sharp');
+
 require('dotenv').config();
 
 const db = new Pool({ connectionString: process.env.DATABASE_URL });
