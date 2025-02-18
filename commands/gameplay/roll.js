@@ -28,7 +28,7 @@ module.exports = {
 		cooldowns.set(userId, Date.now());
 
 		// Select 3 random cards from master list
-		const selectedCards = masterCardList.sort(() => 0.5 - Math.random()).slice(0, 3);
+		const selectedCards = masterCardList.sort(() => 0.5 - Math.random()).slice(0, 1);
 
 		// Create embed for selection
 		const embed = new EmbedBuilder()
@@ -51,7 +51,7 @@ module.exports = {
 
 			const attachmentName = `${card.idol_name.toLowerCase().replace(/\s+/g, '_')}_whiplash.jpeg`;
 			imageFiles.push({
-				attachment: imagePath,
+				attachment: card.image,
 				name: attachmentName,
 			});
 
