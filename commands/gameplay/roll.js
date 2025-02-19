@@ -24,7 +24,7 @@ function getRandomImages(folder, count) {
 	return files.sort(() => Math.random() - 0.5).slice(0, count).map(file => path.join(folder, file));
 }
 
-// Function to stitch images horizontally - NEEEDS TO BE UPDATED
+// Function to stitch images horizontally - NEEEDS TO BE used
 async function stitchImagesHorizontally(imagePaths, outputPath) {
 	try {
 		const images = await Promise.all(imagePaths.map(img => sharp(img).resize(300, 400).toBuffer()));
