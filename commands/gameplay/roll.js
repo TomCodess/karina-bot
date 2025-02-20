@@ -11,6 +11,8 @@ const db = new Pool({ connectionString: process.env.DATABASE_URL });
 const cooldowns = new Map();
 const ROLL_COOLDOWN = 300000; // 5 minutes
 
+const outputFolder = path.join(__dirname, '../../output_pics'); // Folder for output images
+
 // Load master card list
 const masterCardList = JSON.parse(fs.readFileSync('masterCardList.json'));
 
@@ -64,6 +66,12 @@ module.exports = {
 		// ---- Start sitching images together here ---
 		// Extract image paths
 		const imagePaths = selectedCards.map(card => card.image);
+		const outputFileName = `stitched_${Date.now()}.png`;
+		const outputPath = path.join(outputFolder, outputFileName);
+
+		// Generate stitched image
+		const stitchedImagePath = await stitchImagesHorizontally(imagePaths, outputPath);
+		if (!stitchedImagePath) return interaction.reply({ content: '❌ Failed to generate image.', ephemeral: true });
 
 		stitchImagesHorizontally;
 
