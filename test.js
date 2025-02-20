@@ -1,7 +1,10 @@
+/* eslint-disable no-inline-comments */
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const { Pool } = require('pg');
 const fs = require('fs');
-const path = require('path'); // Ensure this is included
+const path = require('path');
+const sharp = require('sharp');
+
 require('dotenv').config();
 
 const db = new Pool({ connectionString: process.env.DATABASE_URL });
@@ -10,6 +13,39 @@ const ROLL_COOLDOWN = 300000; // 5 minutes
 
 // Load master card list
 const masterCardList = JSON.parse(fs.readFileSync('masterCardList.json'));
+
+// Function to get a random selection of images
+function getRandomImages(folder, count) {
+	const files = fs.readdirSync(folder).filter(file => /\.(png|jpg|jpeg)$/i.test(file)); // Get all image files
+	if (files.length < count) {
+		console.error('Not enough images in the folder.');
+		return [];
+	}
+	return files.sort(() => Math.random() - 0.5).slice(0, count).map(file => path.join(folder, file));
+}
+
+// Function to stitch images horizontally - NEEEDS TO BE used
+async function stitchImagesHorizontally(imagePaths, outputPath) {
+	try {
+		const images = await Promise.all(imagePaths.map(img => sharp(img).resize(300, 400).toBuffer()));
+
+		await sharp({
+			create: {
+				width: images.length * 300,
+				height: 400,
+				channels: 4,
+				background: { r: 255, g: 255, b: 255, alpha: 0 },
+			},
+		})
+			.composite(images.map((img, i) => ({ input: img, left: i * 300, top: 0 })))
+			.toFile(outputPath);
+
+		return outputPath; // Return path for Discord upload
+	} catch (error) {
+		console.error('Error stitching images:', error);
+		return null;
+	}
+}
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -27,7 +63,7 @@ module.exports = {
 		cooldowns.set(userId, Date.now());
 
 		// Select 3 random cards from master list
-		const selectedCards = masterCardList.sort(() => 0.5 - Math.random()).slice(0, 3);
+		const selectedCards = masterCardList.sort(() => 0.5 - Math.random()).slice(0, 1);
 
 		// Create embed for selection
 		const embed = new EmbedBuilder()
@@ -36,37 +72,74 @@ module.exports = {
 			.setColor('#FFD700');
 
 		const buttons = new ActionRowBuilder();
-		const imageFiles = []; // To store the image attachments
+
+		const imageFiles = [];
 
 		selectedCards.forEach((card, index) => {
-			const imagePath = path.join('/Users/tchen/karina-bot/images', `${card.idol_name.toLowerCase().replace(/\s+/g, '_')}_whiplash.jpeg`);
+			// Assuming your images are stored in a folder called 'images' in your project directory
+		    const imagePath = path.join('/Users/tchen/karina-bot/', `${card.image}`);
 
-			// Check if the image file exists
-			if (fs.existsSync(imagePath)) {
-				// Add card details to the embed
-				embed.addFields({
-					name: `${index + 1}. ${card.idol_name} (${card.collection})`,
-					value: `✿ **Group**: ${card.group}\n✿ **Rarity**: ${card.rarity}`,
-				});
+			embed.addFields({
+				name: `${index + 1}. ${card.idol_name} (${card.collection})`,
+				value: `✿ **Group**: ${card.group}\n✿ **Rarity**: ${card.rarity}`,
+			});
 
-				// Add the image to the list of files to send
-				imageFiles.push({
-					attachment: imagePath,
-					name: `${card.idol_name.toLowerCase().replace(/\s+/g, '_')}_whiplash.jpeg`,
-				});
-			} else {
-				// If image is not found, notify in the embed
-				embed.addFields({
-					name: `${index + 1}. ${card.idol_name} (${card.collection})`,
-					value: `✿ **Group**: ${card.group}\n✿ **Rarity**: ${card.rarity}\n⚠️ Image not available.`,
-				});
-			}
+			const attachmentName = `${card.idol_name.toLowerCase().replace(/\s+/g, '_')}_whiplash.jpeg`;
+			imageFiles.push({
+				attachment: card.image,
+				name: attachmentName,
+			});
+
+			// Add the image to the embed using attachment URL
+			embed.addFields({
+				name: `Card ${index + 1} Image`,
+				value: `![${card.idol_name}](${`attachment://${attachmentName}`})`,
+			});
+
+			buttons.addComponents(
+				new ButtonBuilder()
+					.setCustomId(`select_card_${index}`)
+					.setLabel(`Select ${index + 1}`)
+					.setStyle(ButtonStyle.Primary),
+			);
 		});
 
-		// Reply with the embed and image attachments
-		return interaction.reply({
-			embeds: [embed],
-			files: imageFiles, 
+		const message = await interaction.reply({ embeds: [embed], files: imageFiles, components: [buttons], fetchReply: true });
+
+		const collector = message.createMessageComponentCollector({ time: 60000 });
+		collector.on('collect', async (buttonInteraction) => {
+			if (buttonInteraction.user.id !== userId) {
+				return buttonInteraction.reply({ content: 'This selection isn\'t for you!', ephemeral: true });
+			}
+
+			const selectedIndex = parseInt(buttonInteraction.customId.split('_')[2]);
+			const selectedCard = selectedCards[selectedIndex];
+
+			// Insert card into inventory
+			await db.query('INSERT INTO user_inventory (user_id, idol_name, rarity, collection, group, copies) VALUES ($1, $2, $3, $4, $5, 1) ON CONFLICT (user_id, idol_name, collection) DO UPDATE SET copies = user_inventory.copies + 1;',
+				[userId, selectedCard.idol_name, selectedCard.rarity, selectedCard.collection, selectedCard.group]);
+
+			// Show final selection
+			const finalEmbed = new EmbedBuilder()
+				.setTitle(`You selected ${selectedCard.idol_name}!`)
+				.setImage(selectedCard.image)
+				.setColor('#FFD700');
+
+			const binderCheck = await db.query('SELECT * FROM user_binder WHERE user_id = $1 AND idol_name = $2 AND collection = $3;', [userId, selectedCard.idol_name, selectedCard.collection]);
+
+			const finalButtons = new ActionRowBuilder().addComponents(
+				new ButtonBuilder()
+					.setCustomId('add_to_binder')
+					.setLabel(binderCheck.rows.length ? 'Already in Binder' : 'Add to Binder')
+					.setStyle(ButtonStyle.Success)
+					.setDisabled(binderCheck.rows.length > 0),
+				new ButtonBuilder()
+					.setCustomId('sell_card')
+					.setLabel('Sell')
+					.setStyle(ButtonStyle.Danger),
+			);
+
+			await buttonInteraction.update({ embeds: [finalEmbed], components: [finalButtons] });
 		});
 	},
 };
