@@ -15,7 +15,7 @@ const ROLL_COOLDOWN = 300000; // 5 minutes
 const masterCardList = JSON.parse(fs.readFileSync('masterCardList.json'));
 
 // Function to get a random selection of images from image folder
-function getRandomImages(count) {
+function getRandomImages() {
 	const selectedCards = masterCardList.sort(() => 0.5 - Math.random()).slice(0, 3);
 	return selectedCards;
 }
@@ -58,8 +58,8 @@ module.exports = {
 		}
 		cooldowns.set(userId, Date.now());
 
-	     // Select 3 random cards from master list ( MOVING THIS OUT INTO FUNCTION )
-		// const selectedCards = masterCardList.sort(() => 0.5 - Math.random()).slice(0, 1);
+
+		const selectedCards = getRandomImages();
 
 		// Create embed for selection
 		const embed = new EmbedBuilder()
