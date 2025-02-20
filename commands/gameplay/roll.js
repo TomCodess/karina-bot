@@ -15,7 +15,7 @@ const ROLL_COOLDOWN = 300000; // 5 minutes
 const masterCardList = JSON.parse(fs.readFileSync('masterCardList.json'));
 
 // Function to get a random selection of images from image folder
-function getRandomImages() {
+function getRandomCards() {
 	const selectedCards = masterCardList.sort(() => 0.5 - Math.random()).slice(0, 3);
 	return selectedCards;
 }
@@ -59,7 +59,16 @@ module.exports = {
 		cooldowns.set(userId, Date.now());
 
 
-		const selectedCards = getRandomImages();
+		const selectedCards = getRandomCards();
+
+		// ---- Start sitching images together here ---
+		// Extract image paths
+		const imagePaths = selectedCards.map(card => card.image);
+
+		stitchImagesHorizontally;
+
+
+		// ---- End sitching images together here ---
 
 		// Create embed for selection
 		const embed = new EmbedBuilder()
