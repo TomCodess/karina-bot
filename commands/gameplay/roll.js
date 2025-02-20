@@ -16,8 +16,8 @@ const masterCardList = JSON.parse(fs.readFileSync('masterCardList.json'));
 
 // Function to get a random selection of images from image folder
 function getRandomImages(count) {
-	const selectedCards = masterCardList.sort(() => 0.5 - Math.random()).slice(0, 1);
-	return files.sort(() => Math.random() - 0.5).slice(0, count).map(file => path.join(folder, file));
+	const selectedCards = masterCardList.sort(() => 0.5 - Math.random()).slice(0, 3);
+	return selectedCards;
 }
 
 // Function to stitch images horizontally - NEEEDS TO BE used
