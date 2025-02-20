@@ -14,7 +14,7 @@ const ROLL_COOLDOWN = 300000; // 5 minutes
 // Load master card list
 const masterCardList = JSON.parse(fs.readFileSync('masterCardList.json'));
 
-// Function to get a random selection of images
+// Function to get a random selection of images from image folder
 function getRandomImages(folder, count) {
 	const files = fs.readdirSync(folder).filter(file => /\.(png|jpg|jpeg)$/i.test(file)); // Get all image files
 	if (files.length < count) {
