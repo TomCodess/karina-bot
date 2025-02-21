@@ -29,13 +29,15 @@ async function stitchImagesHorizontally(imagePaths, outputPath) {
 
 		await sharp({
 			create: {
-				width: images.length * 300,
-				height: 400,
+				width: images.length * 900,
+				height: 500,
 				channels: 4,
 				background: { r: 255, g: 255, b: 255, alpha: 0 },
 			},
 		})
-			.composite(images.map((img, i) => ({ input: img, left: i * 300, top: 0 })))
+			.composite(images.map((img, i) => ({ input: img, left: i * 500, top: 0 })))
+			.toFormat('webp') // Use WebP for high quality
+			.png({ quality: 100 })
 			.toFile(outputPath);
 
 		return outputPath; // Return path for Discord upload
@@ -89,10 +91,10 @@ module.exports = {
 
 		selectedCards.forEach((card, index) => {
 
-			embed.addFields({
-				name: `${index + 1}. ${card.idol_name} (${card.collection})`,
-				value: `✿ **Group**: ${card.group}\n✿ **Rarity**: ${card.rarity}`,
-			});
+			// embed.addFields({
+			// 	name: `${index + 1}. ${card.idol_name} (${card.collection})`,
+			// 	value: `✿ **Group**: ${card.group}\n✿ **Rarity**: ${card.rarity}`,
+			// });
 
 			buttons.addComponents(
 				new ButtonBuilder()
