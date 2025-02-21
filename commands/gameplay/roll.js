@@ -56,7 +56,7 @@ module.exports = {
 		// Cooldown check
 		const lastUsed = cooldowns.get(userId);
 		if (lastUsed && Date.now() - lastUsed < ROLL_COOLDOWN) {
-			return interaction.reply({ content: '⏳ You must wait 5 minutes before rolling again!', ephemeral: true });
+			return interaction.channel.send({ content: '⏳ You must wait 5 minutes before rolling again!', ephemeral: true });
 		}
 		cooldowns.set(userId, Date.now());
 
@@ -103,6 +103,13 @@ module.exports = {
 		});
 
 		const message = await interaction.reply({ embeds: [embed], files: [file], components: [buttons], fetchReply: true });
+		// Automatically delete the stitched image after sending
+		setTimeout(() => {
+			fs.unlink(stitchedImagePath, (err) => {
+				if (err) console.error('Error deleting stitched image:', err);
+				else console.log('✅ Stitched image deleted:', stitchedImagePath);
+			});
+		}, 5000);
 
 		const collector = message.createMessageComponentCollector({ time: 60000 });
 		collector.on('collect', async (buttonInteraction) => {
