@@ -73,14 +73,15 @@ module.exports = {
 		const stitchedImagePath = await stitchImagesHorizontally(imagePaths, outputPath);
 		if (!stitchedImagePath) return interaction.reply({ content: '❌ Failed to generate image.', ephemeral: true });
 
-		stitchImagesHorizontally;
-
+		// Attach image to message -- IDK IF I NEED THIS --
+		const attachment = new AttachmentBuilder(stitchedImagePath, { name: outputFileName });
 
 		// ---- End sitching images together here ---
 
 		// Create embed for selection
 		const embed = new EmbedBuilder()
 			.setTitle(`${username}'s Card Roll 🎴`)
+			.setImage(`attachment://${outputFileName}`)
 			.setDescription('Choose one of the cards below:')
 			.setColor('#FFD700');
 
