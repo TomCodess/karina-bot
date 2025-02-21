@@ -1,5 +1,5 @@
 /* eslint-disable no-inline-comments */
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const { Pool } = require('pg');
 const fs = require('fs');
 const path = require('path');
@@ -74,7 +74,7 @@ module.exports = {
 		if (!stitchedImagePath) return interaction.reply({ content: '❌ Failed to generate image.', ephemeral: true });
 
 		// Attach image to message -- IDK IF I NEED THIS --
-		const attachment = new AttachmentBuilder(stitchedImagePath, { name: outputFileName });
+		const file = new AttachmentBuilder(stitchedImagePath, { name: outputFileName });
 
 		// ---- End sitching images together here ---
 
@@ -87,27 +87,11 @@ module.exports = {
 
 		const buttons = new ActionRowBuilder();
 
-		const imageFiles = [];
-
 		selectedCards.forEach((card, index) => {
-			// Assuming your images are stored in a folder called 'images' in your project directory
-		    const imagePath = path.join('/Users/tchen/karina-bot/', `${card.image}`);
 
 			embed.addFields({
 				name: `${index + 1}. ${card.idol_name} (${card.collection})`,
 				value: `✿ **Group**: ${card.group}\n✿ **Rarity**: ${card.rarity}`,
-			});
-
-			const attachmentName = `${card.idol_name.toLowerCase().replace(/\s+/g, '_')}_whiplash.jpeg`;
-			imageFiles.push({
-				attachment: card.image,
-				name: attachmentName,
-			});
-
-			// Add the image to the embed using attachment URL
-			embed.addFields({
-				name: `Card ${index + 1} Image`,
-				value: `![${card.idol_name}](${`attachment://${attachmentName}`})`,
 			});
 
 			buttons.addComponents(
@@ -118,7 +102,7 @@ module.exports = {
 			);
 		});
 
-		const message = await interaction.reply({ embeds: [embed], files: imageFiles, components: [buttons], fetchReply: true });
+		const message = await interaction.reply({ embeds: [embed], files: [file], components: [buttons], fetchReply: true });
 
 		const collector = message.createMessageComponentCollector({ time: 60000 });
 		collector.on('collect', async (buttonInteraction) => {
