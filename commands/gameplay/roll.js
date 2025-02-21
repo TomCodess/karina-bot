@@ -25,18 +25,18 @@ function getRandomCards() {
 // Function to stitch images horizontally - NEEEDS TO BE used
 async function stitchImagesHorizontally(imagePaths, outputPath) {
 	try {
-		const images = await Promise.all(imagePaths.map(img => sharp(img).resize(300, 400).toBuffer()));
+		const images = await Promise.all(imagePaths.map(img => sharp(img).resize(400, 500).toBuffer()));
 
 		await sharp({
 			create: {
-				width: images.length * 900,
+				width: images.length * 500,
 				height: 500,
 				channels: 4,
 				background: { r: 255, g: 255, b: 255, alpha: 0 },
 			},
 		})
 			.composite(images.map((img, i) => ({ input: img, left: i * 500, top: 0 })))
-			.toFormat('webp') // Use WebP for high quality
+			// .toFormat('webp') // Use WebP for high quality
 			.png({ quality: 100 })
 			.toFile(outputPath);
 
