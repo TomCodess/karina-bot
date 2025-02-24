@@ -6,6 +6,7 @@ require('dotenv').config();
 const db = new Pool({ connectionString: process.env.DATABASE_URL });
 
 module.exports = async function handleSellCard(interaction, selectedCards) {
+    console.log('Handling sell card...');
 	const userId = interaction.user.id;
 	const username = interaction.user.username;
 	const avatarUrl = interaction.user.displayAvatarURL();

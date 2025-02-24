@@ -3,7 +3,7 @@ const path = require('path');
 const handleSellCard = require('./sellCardHandler');
 
 
-module.exports = async function handleButtonClick(interaction, selectedCards) {
+module.exports = async function handleButtonClick(interaction, selectedCards, userId) {
 	const selectedCard = selectedCards.find(card => `[${card.rarity}] ${card.idol_name}` === interaction.customId);
 	if (!selectedCard) return;
 
@@ -20,18 +20,29 @@ module.exports = async function handleButtonClick(interaction, selectedCards) {
 			.setStyle(ButtonStyle.Success),
 	);
 
-	const message = await interaction.update({ embeds: [newEmbed], files: [selectedCard.image], components: [sellButton] });
+	await interaction.update({ embeds: [newEmbed], files: [selectedCard.image], components: [sellButton] });
+
+	const message = await interaction.fetchReply();
+
+	// console.log('Selected Card:', selectedCard);
+	// console.log('Message ID:', message.id);
+	// console.log('User ID:', userId);
 
 	// **Listen for button interactions in the same function**
 	const filter = (btnInteraction) => {
+		console.log('CHECKING HERE');
+		console.log(btnInteraction.isButton() && btnInteraction.message.id === message.id && btnInteraction.user.id === userId);
 		return btnInteraction.isButton() && btnInteraction.message.id === message.id && btnInteraction.user.id === userId;
 	};
 
 	// 1-minute time to decide to sell
 	const sell = message.createMessageComponentCollector({ filter, time: 60000 });
 
+	console.log('Listening for sell button...');
+
 	// When sell is selected
 	sell.on('sell', async (btnInteraction) => {
+		console.log('Selling card...');
 		await handleSellCard(btnInteraction, selectedCards);
 	});
 

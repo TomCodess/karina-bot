@@ -145,6 +145,7 @@ module.exports = {
 
 		// **Listen for button interactions in the same function**
 		const filter = (btnInteraction) => {
+            console.log('FIRST Filtering button interactions...');
 			return btnInteraction.isButton() && btnInteraction.message.id === message.id && btnInteraction.user.id === userId;
 		};
 
@@ -153,7 +154,7 @@ module.exports = {
 
 		// When a card is selected
 		collector.on('collect', async (btnInteraction) => {
-			await handleButtonClick(btnInteraction, selectedCards);
+			await handleButtonClick(btnInteraction, selectedCards, userId);
 
 		});
 
