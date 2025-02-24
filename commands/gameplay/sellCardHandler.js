@@ -5,8 +5,8 @@ require('dotenv').config();
 // Setup PostgreSQL Connection
 const db = new Pool({ connectionString: process.env.DATABASE_URL });
 
-module.exports = async function handleSellCard(interaction, selectedCards) {
-    console.log('THE CARD SLECTED IS ', selectedCards);
+module.exports = async function handleSellCard(interaction, selectedCard) {
+    console.log('THE CARD SLECTED IS ', selectedCard);
 	const userId = interaction.user.id;
 	const username = interaction.user.username;
 	const avatarUrl = interaction.user.displayAvatarURL();

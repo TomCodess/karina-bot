@@ -39,7 +39,7 @@ module.exports = async function handleButtonClick(interaction, selectedCards, us
 	// When sell is selected
 	sell.on('collect', async (btnInteraction) => {
 		console.log('Selling card...');
-		await handleSellCard(btnInteraction, selectedCards);
+		await handleSellCard(btnInteraction, selectedCard);
 	});
 
 
