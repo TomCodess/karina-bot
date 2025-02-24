@@ -120,7 +120,7 @@ module.exports = {
 			buttons.addComponents(
 				new ButtonBuilder()
 					.setCustomId(`[${card.rarity}]${card.idol_name}`)
-					.setLabel(`[${card.rarity}]${card.idol_name}`)
+					.setLabel(`[${card.rarity}] ${card.idol_name}`)
 					.setStyle(ButtonStyle.Primary),
 			);
 		});
@@ -144,8 +144,8 @@ module.exports = {
 			const selectedCard = selectedCards[selectedIndex];
 
 			// Insert card into inventory
-			await db.query('INSERT INTO user_inventory (user_id, idol_name, rarity, collection, group, copies) VALUES ($1, $2, $3, $4, $5, 1) ON CONFLICT (user_id, idol_name, collection) DO UPDATE SET copies = user_inventory.copies + 1;',
-				[userId, selectedCard.idol_name, selectedCard.rarity, selectedCard.collection, selectedCard.group]);
+			// await db.query('INSERT INTO user_inventory (user_id, idol_name, rarity, collection, group, copies) VALUES ($1, $2, $3, $4, $5, 1) ON CONFLICT (user_id, idol_name, collection) DO UPDATE SET copies = user_inventory.copies + 1;',
+			// 	[userId, selectedCard.idol_name, selectedCard.rarity, selectedCard.collection, selectedCard.group]);
 
 			// Show final selection
 			const finalEmbed = new EmbedBuilder()
