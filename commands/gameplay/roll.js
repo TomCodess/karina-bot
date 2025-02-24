@@ -25,27 +25,48 @@ function getRandomCards() {
 // Function to stitch images horizontally - NEEEDS TO BE used
 async function stitchImagesHorizontally(imagePaths, outputPath) {
 	try {
-		const images = await Promise.all(imagePaths.map(img => sharp(img).resize(400, 500).toBuffer()));
+		const width = 900; // Width of each card
+		const height = 1200; // Height of each card
+		const gap = 20; // Gap between images
 
-		await sharp({
+		// Ensure all images are resized to the same dimensions
+		const images = await Promise.all(
+			imagePaths.map(img => sharp(img).resize(width, height).toBuffer()),
+		);
+
+		// Calculate total width (accounting for gaps)
+		const totalWidth = images.length * width + (images.length - 1) * gap;
+
+		// Create a base image of correct size
+		const canvas = sharp({
 			create: {
-				width: images.length * 500,
-				height: 500,
+				width: totalWidth,
+				height: height,
 				channels: 4,
-				background: { r: 255, g: 255, b: 255, alpha: 0 },
+				background: { r: 255, g: 255, b: 255, alpha: 0 }, // Transparent background
 			},
-		})
-			.composite(images.map((img, i) => ({ input: img, left: i * 500, top: 0 })))
-			// .toFormat('webp') // Use WebP for high quality
-			.png({ quality: 100 })
+		});
+
+		// Composite images onto the canvas with gaps
+		await canvas
+			.composite(
+				images.map((img, i) => ({
+					input: img,
+					left: i * (width + gap), // Shift each image with gap included
+					top: 0,
+				})),
+			)
+			.toFormat('webp') // Use WebP for high quality
+			.webp({ quality: 100 }) // Max quality
 			.toFile(outputPath);
 
-		return outputPath; // Return path for Discord upload
+		return outputPath;
 	} catch (error) {
 		console.error('Error stitching images:', error);
 		return null;
 	}
 }
+
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -75,7 +96,7 @@ module.exports = {
 		const stitchedImagePath = await stitchImagesHorizontally(imagePaths, outputPath);
 		if (!stitchedImagePath) return interaction.reply({ content: '❌ Failed to generate image.', ephemeral: true });
 
-		// Attach image to message -- IDK IF I NEED THIS --
+		// Attach image to message -- needed for await interaction.reply --
 		const file = new AttachmentBuilder(stitchedImagePath, { name: outputFileName });
 
 		// ---- End sitching images together here ---
