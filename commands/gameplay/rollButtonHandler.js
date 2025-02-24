@@ -1,5 +1,6 @@
-const { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { EmbedBuilder, AttachmentBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const path = require('path');
+const handleSellCard = require('./sellCardHandler');
 
 
 module.exports = async function handleButtonClick(interaction, selectedCards) {
@@ -19,7 +20,7 @@ module.exports = async function handleButtonClick(interaction, selectedCards) {
 			.setStyle(ButtonStyle.Success),
 	);
 
-	await interaction.update({ embeds: [newEmbed], files: [selectedCard.image], components: [sellButton] });
+	const message = await interaction.update({ embeds: [newEmbed], files: [selectedCard.image], components: [sellButton] });
 
 	// **Listen for button interactions in the same function**
 	const filter = (btnInteraction) => {
@@ -27,10 +28,10 @@ module.exports = async function handleButtonClick(interaction, selectedCards) {
 	};
 
 	// 1-minute time to decide to sell
-	const collector = message.createMessageComponentCollector({ filter, time: 60000 });
+	const sell = message.createMessageComponentCollector({ filter, time: 60000 });
 
-	// When a card is selected
-	collector.on('collect', async (btnInteraction) => {
+	// When sell is selected
+	sell.on('sell', async (btnInteraction) => {
 		await handleSellCard(btnInteraction, selectedCards);
 	});
 
