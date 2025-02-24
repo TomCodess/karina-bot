@@ -36,8 +36,6 @@ module.exports = async function handleButtonClick(interaction, selectedCards, us
 	// 1-minute time to decide to sell
 	const sell = message.createMessageComponentCollector({ filter, time: 60000 });
 
-	console.log('Listening for sell button...');
-
 	// When sell is selected
 	sell.on('collect', async (btnInteraction) => {
 		console.log('Selling card...');

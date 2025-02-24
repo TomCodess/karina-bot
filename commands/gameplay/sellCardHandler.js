@@ -6,7 +6,7 @@ require('dotenv').config();
 const db = new Pool({ connectionString: process.env.DATABASE_URL });
 
 module.exports = async function handleSellCard(interaction, selectedCards) {
-    console.log('Handling sell card...');
+    console.log('THE CARD SLECTED IS ', selectedCards);
 	const userId = interaction.user.id;
 	const username = interaction.user.username;
 	const avatarUrl = interaction.user.displayAvatarURL();
@@ -36,7 +36,8 @@ module.exports = async function handleSellCard(interaction, selectedCards) {
 			)
 			.setTimestamp();
 
-		return interaction.reply({ embeds: [embed] });
+		// files: [] is needed to remove the image attachment, components: [] is needed to remove the button
+		await interaction.update({ embeds: [embed], files:[], components: [] });
 	} catch (error) {
 		console.error('Database Error:', error);
 		return interaction.reply({ content: '❌ An error occurred while selling the card.', ephemeral: true });
