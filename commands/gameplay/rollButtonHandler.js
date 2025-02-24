@@ -1,4 +1,6 @@
-const { EmbedBuilder, ActionRowBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const path = require('path');
+
 
 module.exports = async function handleButtonClick(interaction, selectedCards) {
 	const selectedCard = selectedCards.find(card => `[${card.rarity}] ${card.idol_name}` === interaction.customId);
@@ -10,9 +12,27 @@ module.exports = async function handleButtonClick(interaction, selectedCards) {
 		.setDescription(`You selected **${selectedCard.idol_name}** from **${selectedCard.collection}**!`)
 		.setColor('#FFD700');
 
-	const updatedButtons = new ActionRowBuilder().addComponents(
-		interaction.message.components[0].components.map(button => button.setDisabled(true))
+	const sellButton = new ActionRowBuilder().addComponents(
+		new ButtonBuilder()
+			.setCustomId('sell_card')
+			.setLabel('💰 Sell Card')
+			.setStyle(ButtonStyle.Success),
 	);
 
-	await interaction.update({ embeds: [newEmbed], files: [selectedCard.image], components: [updatedButtons] });
+	await interaction.update({ embeds: [newEmbed], files: [selectedCard.image], components: [sellButton] });
+
+	// **Listen for button interactions in the same function**
+	const filter = (btnInteraction) => {
+		return btnInteraction.isButton() && btnInteraction.message.id === message.id && btnInteraction.user.id === userId;
+	};
+
+	// 1-minute time to decide to sell
+	const collector = message.createMessageComponentCollector({ filter, time: 60000 });
+
+	// When a card is selected
+	collector.on('collect', async (btnInteraction) => {
+		await handleSellCard(btnInteraction, selectedCards);
+	});
+
+
 };

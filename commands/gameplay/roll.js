@@ -4,6 +4,8 @@ const { Pool } = require('pg');
 const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
+const handleButtonClick = require('./rollButtonHandler');
+
 
 require('dotenv').config();
 
@@ -146,26 +148,9 @@ module.exports = {
 		// 1-minute time to collect
 		const collector = message.createMessageComponentCollector({ filter, time: 60000 });
 
-        // When a card is selected
+		// When a card is selected
 		collector.on('collect', async (btnInteraction) => {
-			// Check if the button clicked is one of the selected cards
-			const selectedCard = selectedCards.find(card => `[${card.rarity}] ${card.idol_name}` === btnInteraction.customId);
-			if (!selectedCard) return;
-
-
-			const newEmbed = new EmbedBuilder()
-				.setTitle(`${btnInteraction.user.username}'s Selected Card ✨`)
-				.setImage(`attachment://${path.basename(selectedCard.image)}`)
-				.setDescription(`You selected **${selectedCard.idol_name}** from **${selectedCard.collection}**!`)
-				.setColor('#FFD700');
-
-
-			// Disable buttons after selection
-			const updatedButtons = new ActionRowBuilder().addComponents(
-				buttons.components.map(button => button.setDisabled(true)),
-			);
-
-			await btnInteraction.update({ embeds: [newEmbed], files: [selectedCard.image], components: [updatedButtons] });
+			await handleButtonClick(btnInteraction, selectedCards);
 
 		});
 
