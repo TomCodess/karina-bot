@@ -53,7 +53,7 @@ module.exports = {
 			// Create embedded message
 			const embed = new EmbedBuilder()
 				.setColor('#FFD700')
-				.setTitle('💰 Coin Earned!')
+				.setTitle('💰 Coins Earned!')
 				.setDescription(`${username} has worked and earned **${coinsEarned}** coins!`)
 				.setThumbnail(avatarUrl)
 				.addFields(
