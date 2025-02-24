@@ -146,15 +146,12 @@ module.exports = {
 		// 1-minute time to collect
 		const collector = message.createMessageComponentCollector({ filter, time: 60000 });
 
-        collector.on('collect', async (btnInteraction) => {
-            const selectedCard = selectedCards.find(card => `[${card.rarity}]${card.idol_name}` === btnInteraction.customId);
+		collector.on('collect', async (btnInteraction) => {
+			// Check if the button clicked is one of the selected cards
+			const selectedCard = selectedCards.find(card => `[${card.rarity}] ${card.idol_name}` === btnInteraction.customId);
 			if (!selectedCard) return;
 
-            console.log("here");
-            console.log(selectedCard);
-
-        }
-
+		});
 
 	},
 };
