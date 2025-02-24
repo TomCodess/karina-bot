@@ -127,7 +127,10 @@ module.exports = {
 			);
 		});
 
-		const message = await interaction.reply({ embeds: [embed], files: [file], components: [buttons], fetchReply: true });
+		await interaction.reply({ embeds: [embed], files: [file], components: [buttons] });
+
+		const message = await interaction.fetchReply();
+
 
 		// Store roll data in message metadata
 		const rollData = { selectedCards, message, userId };
