@@ -119,7 +119,7 @@ module.exports = {
 
 			buttons.addComponents(
 				new ButtonBuilder()
-					.setCustomId(`[${index}]`)
+					.setCustomId(`[${card.rarity}] ${card.idol_name}`)
 					.setLabel(`[${card.rarity}] ${card.idol_name}`)
 					.setStyle(ButtonStyle.Primary),
 			);
@@ -127,7 +127,7 @@ module.exports = {
 
 		const message = await interaction.reply({ embeds: [embed], files: [file], components: [buttons], fetchReply: true });
 
-        // Store roll data in message metadata
+		// Store roll data in message metadata
 		const rollData = { selectedCards, message, userId };
 
 		// Automatically delete the stitched image after sending
@@ -142,6 +142,19 @@ module.exports = {
 		const filter = (btnInteraction) => {
 			return btnInteraction.isButton() && btnInteraction.message.id === message.id && btnInteraction.user.id === userId;
 		};
-        
+
+		// 1-minute time to collect
+		const collector = message.createMessageComponentCollector({ filter, time: 60000 });
+
+        collector.on('collect', async (btnInteraction) => {
+            const selectedCard = selectedCards.find(card => `[${card.rarity}]${card.idol_name}` === btnInteraction.customId);
+			if (!selectedCard) return;
+
+            console.log("here");
+            console.log(selectedCard);
+
+        }
+
+
 	},
 };
