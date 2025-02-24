@@ -119,8 +119,8 @@ module.exports = {
 
 			buttons.addComponents(
 				new ButtonBuilder()
-					.setCustomId(`select_card_${index}`)
-					.setLabel(`Select ${index + 1}`)
+					.setCustomId(`[${card.rarity}]${card.idol_name}`)
+					.setLabel(`[${card.rarity}]${card.idol_name}`)
 					.setStyle(ButtonStyle.Primary),
 			);
 		});
