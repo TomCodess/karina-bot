@@ -119,13 +119,17 @@ module.exports = {
 
 			buttons.addComponents(
 				new ButtonBuilder()
-					.setCustomId(`[${card.rarity}]${card.idol_name}`)
+					.setCustomId(`[${index}]`)
 					.setLabel(`[${card.rarity}] ${card.idol_name}`)
 					.setStyle(ButtonStyle.Primary),
 			);
 		});
 
 		const message = await interaction.reply({ embeds: [embed], files: [file], components: [buttons], fetchReply: true });
+
+        // Store roll data in message metadata
+		const rollData = { selectedCards, message, userId };
+
 		// Automatically delete the stitched image after sending
 		setTimeout(() => {
 			fs.unlink(stitchedImagePath, (err) => {
@@ -134,40 +138,10 @@ module.exports = {
 			});
 		}, 5000);
 
-		const collector = message.createMessageComponentCollector({ time: 60000 });
-		collector.on('collect', async (buttonInteraction) => {
-			if (buttonInteraction.user.id !== userId) {
-				return buttonInteraction.reply({ content: 'This selection isn\'t for you!', ephemeral: true });
-			}
-
-			const selectedIndex = parseInt(buttonInteraction.customId.split('_')[2]);
-			const selectedCard = selectedCards[selectedIndex];
-
-			// Insert card into inventory
-			// await db.query('INSERT INTO user_inventory (user_id, idol_name, rarity, collection, group, copies) VALUES ($1, $2, $3, $4, $5, 1) ON CONFLICT (user_id, idol_name, collection) DO UPDATE SET copies = user_inventory.copies + 1;',
-			// 	[userId, selectedCard.idol_name, selectedCard.rarity, selectedCard.collection, selectedCard.group]);
-
-			// Show final selection
-			const finalEmbed = new EmbedBuilder()
-				.setTitle(`You selected ${selectedCard.idol_name}!`)
-				.setImage(selectedCard.image)
-				.setColor('#FFD700');
-
-			const binderCheck = await db.query('SELECT * FROM user_binder WHERE user_id = $1 AND idol_name = $2 AND collection = $3;', [userId, selectedCard.idol_name, selectedCard.collection]);
-
-			const finalButtons = new ActionRowBuilder().addComponents(
-				new ButtonBuilder()
-					.setCustomId('add_to_binder')
-					.setLabel(binderCheck.rows.length ? 'Already in Binder' : 'Add to Binder')
-					.setStyle(ButtonStyle.Success)
-					.setDisabled(binderCheck.rows.length > 0),
-				new ButtonBuilder()
-					.setCustomId('sell_card')
-					.setLabel('Sell')
-					.setStyle(ButtonStyle.Danger),
-			);
-
-			await buttonInteraction.update({ embeds: [finalEmbed], components: [finalButtons] });
-		});
+		// **Listen for button interactions in the same function**
+		const filter = (btnInteraction) => {
+			return btnInteraction.isButton() && btnInteraction.message.id === message.id && btnInteraction.user.id === userId;
+		};
+        
 	},
 };
