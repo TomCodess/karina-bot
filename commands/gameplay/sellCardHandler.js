@@ -28,7 +28,7 @@ module.exports = async function handleSellCard(interaction, selectedCards) {
 		// Create embedded message
 		const embed = new EmbedBuilder()
 			.setColor('#00FF00')
-			.setTitle('🤑 Card Sold!')
+			.setTitle('Card Sold!')
 			.setDescription(`${username} has sold a card for **${sellPrice}** coins!`)
 			.setThumbnail(avatarUrl)
 			.addFields(

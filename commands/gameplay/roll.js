@@ -145,7 +145,7 @@ module.exports = {
 
 		// **Listen for button interactions in the same function**
 		const filter = (btnInteraction) => {
-            console.log('FIRST Filtering button interactions...');
+			console.log('FIRST Filtering button interactions...');
 			return btnInteraction.isButton() && btnInteraction.message.id === message.id && btnInteraction.user.id === userId;
 		};
 

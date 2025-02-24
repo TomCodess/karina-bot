@@ -30,8 +30,6 @@ module.exports = async function handleButtonClick(interaction, selectedCards, us
 
 	// **Listen for button interactions in the same function**
 	const filter = (btnInteraction) => {
-		console.log('CHECKING HERE');
-		console.log(btnInteraction.isButton() && btnInteraction.message.id === message.id && btnInteraction.user.id === userId);
 		return btnInteraction.isButton() && btnInteraction.message.id === message.id && btnInteraction.user.id === userId;
 	};
 
@@ -41,7 +39,7 @@ module.exports = async function handleButtonClick(interaction, selectedCards, us
 	console.log('Listening for sell button...');
 
 	// When sell is selected
-	sell.on('sell', async (btnInteraction) => {
+	sell.on('collect', async (btnInteraction) => {
 		console.log('Selling card...');
 		await handleSellCard(btnInteraction, selectedCards);
 	});
