@@ -36,7 +36,7 @@ module.exports = async function handleButtonClick(interaction, selectedCards, us
 	// 1-minute time to decide to sell
 	const sell = message.createMessageComponentCollector({ filter, time: 60000 });
 
-	// When sell is selected
+	// When sell is selected, on collect is discord equivalent of on click
 	sell.on('collect', async (btnInteraction) => {
 		console.log('Selling card...');
 		await handleSellCard(btnInteraction, selectedCard);
