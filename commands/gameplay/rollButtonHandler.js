@@ -13,6 +13,10 @@ module.exports = async function handleButtonClick(interaction, selectedCards, us
 		.setDescription(`You selected **${selectedCard.idol_name}** from **${selectedCard.collection}**!`)
 		.setColor('#FFD700');
 
+	/**
+	 * NEED TO ADD HERE LATER Logic for inventory system 
+	 */
+
 	const sellButton = new ActionRowBuilder().addComponents(
 		new ButtonBuilder()
 			.setCustomId('sell_card')
