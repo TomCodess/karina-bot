@@ -6,10 +6,17 @@ require('dotenv').config();
 const db = new Pool({ connectionString: process.env.DATABASE_URL });
 
 module.exports = async function handleSellCard(interaction, selectedCard) {
-    console.log('THE CARD SLECTED IS ', selectedCard);
+	console.log('THE CARD SLECTED IS ', selectedCard);
 	const userId = interaction.user.id;
 	const username = interaction.user.username;
 	const avatarUrl = interaction.user.displayAvatarURL();
+
+	/**
+     * ADD HERE LATER
+     *  If the card is a rare card, sell it for 100 coins
+     * if the card is a common card, sell it for 50 coins
+     * etc etc
+     */
 
 	// Generate random sell price (50-70 coins)
 	const sellPrice = Math.floor(Math.random() * 21) + 50;
