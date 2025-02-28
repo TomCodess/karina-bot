@@ -16,6 +16,7 @@ module.exports = async function handleButtonClick(interaction, selectedCards, us
 	/**
 	 * NEED TO ADD HERE LATER Logic for inventory system.
 	 * Might need to abstract this function out as well 
+	 * Make new file, make new table oin DB 
 	 */
 
 	const sellButton = new ActionRowBuilder().addComponents(
