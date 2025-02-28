@@ -132,8 +132,8 @@ module.exports = {
 		const message = await interaction.fetchReply();
 
 
-		// Store roll data in message metadata
-		const rollData = { selectedCards, message, userId };
+		// Store roll data in message metadata **UNUSED**
+		// const rollData = { selectedCards, message, userId };
 
 		// Automatically delete the stitched image after sending
 		setTimeout(() => {
