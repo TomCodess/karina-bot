@@ -14,7 +14,8 @@ module.exports = async function handleButtonClick(interaction, selectedCards, us
 		.setColor('#FFD700');
 
 	/**
-	 * NEED TO ADD HERE LATER Logic for inventory system 
+	 * NEED TO ADD HERE LATER Logic for inventory system.
+	 * Might need to abstract this function out as well 
 	 */
 
 	const sellButton = new ActionRowBuilder().addComponents(
