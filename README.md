@@ -43,7 +43,7 @@ Karina is a **K-Pop Card Collection Bot** designed to bring the excitement of tr
 | `/leaderboard`       | Check top collectors.        |
 | `/events`            | View ongoing special events. |
 | `/profile`           | Customize your profile.      |
-| `/albums`            | Manage your card albums.     |
+| `/binder`            | Manage your binder that has your cards.     |
 
 ### And more commands! You can see all commands using `/help`
 ---
