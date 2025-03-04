@@ -14,7 +14,7 @@ module.exports = async function handleButtonClick(interaction, selectedCards, us
 		.setColor('#FFD700');
 
 	/**
-	 * NEED TO ADD HERE LATER Logic for inventory system.
+	 * NEED TO ADD HERE LATER Logic for binder system.
 	 * Might need to abstract this function out as well 
 	 * Make new file, make new table oin DB 
 	 */
