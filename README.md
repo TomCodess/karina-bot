@@ -22,7 +22,7 @@ Karina is a **K-Pop Card Collection Bot** designed to bring the excitement of tr
 
 ## 📸 Screenshots
 
-> Gonna showcase the bot soon it's still WIP
+> Showcase the bot soon is WIP
 
 ---
 
