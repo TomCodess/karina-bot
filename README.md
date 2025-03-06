@@ -55,7 +55,6 @@ We welcome contributions to make Karina even better! Feel free to fork the proje
 ### Ideas for Contribution
 - Suggest new card themes or features.
 - Help with bug fixes or performance improvements.
-- Create guides or resources for new users.
 
 ---
 
