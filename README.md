@@ -61,7 +61,7 @@ We welcome contributions to make Karina even better! Feel free to fork the proje
 
 ## 💌 Support
 
-- Sharing it with your friends and community.
+-your friends and community.
 - [Donating](#) to help keep the project alive. ( ADD LINK LATER) 
 
 ---
