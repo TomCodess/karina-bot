@@ -50,7 +50,7 @@ Karina is a **K-Pop Card Collection Bot** designed to bring the excitement of tr
 
 ## 🤝 Contribution
 
-We welcome contributions to make Karina even better! Feel free to fork the project, make your changes, and open a pull request.
+(DISCORD FOR SUGGESTIONS)
 
 ### Ideas for Contribution
 - Suggest new card themes or features.
