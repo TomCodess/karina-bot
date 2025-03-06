@@ -78,7 +78,7 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-### ✨ Let the K-Pop adventure begin!
+### ✨ Let the adventure begin!
 
 ---
 <div align="center">
