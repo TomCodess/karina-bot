@@ -4,6 +4,13 @@ const { Pool } = require('pg');
 require('dotenv').config();
 
 // Setup PostgreSQL Connection
+
+
+/**
+ * TODO: Change this to AWS RDS connection like in intializeProfile.js
+ */
+
+
 const db = new Pool({ connectionString: process.env.DATABASE_URL });
 
 // Cooldown tracking
