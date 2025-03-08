@@ -1,12 +1,20 @@
+/* eslint-disable no-inline-comments */
 const { SlashCommandBuilder } = require('discord.js');
 const { Pool } = require('pg');
 require('dotenv').config();
 
 // Setup PostgreSQL Connection
-const db = new Pool({ connectionString: process.env.DATABASE_URL });
+const pool = new Pool({
+	host: process.env.DB_HOST,
+	user: process.env.DB_USER,
+	password: process.env.DB_PASSWORD,
+	database: process.env.DB_NAME,
+	port: process.env.DB_PORT || 5432, // Default to 5432 if not provided
+	ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
+});
 
-db.connect()
-	.then(() => console.log('✅ Connected to Neon PostgreSQL'))
+pool.connect()
+	.then(() => console.log('✅ Connected to AWS RDS!'))
 	.catch(err => console.error('❌ Database Connection Error:', err));
 
 module.exports = {
