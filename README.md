@@ -15,7 +15,6 @@ Karina is a **K-Pop Card Collection Bot** designed {ADD LATER}
 - **🏆 Leaderboards:** Show off your collection and climb the ranks of top collectors.
 - **✨ Special Events:** Participate in limited-time events to grab exclusive cards.
 - **🎨 Customizable Profiles:** Personalize your profile to showcase your unique K-Pop style.
-- **📂 Album Organization:** Arrange your cards into albums to keep your collection organized.
 - **💬 Community Interaction:** Engage with other fans in Karina-supported Discord servers.
 
 ---
