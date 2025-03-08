@@ -13,6 +13,11 @@ const db = new Pool({
 	ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
 });
 
+
+/**
+ * TODO: Make tables for users and photocards and whatever else i need
+ */
+
 db.connect()
 	.then(() => console.log('✅ Connected to AWS RDS!'))
 	.catch(err => console.error('❌ Database Connection Error:', err));
