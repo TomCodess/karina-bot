@@ -4,7 +4,7 @@ const { Pool } = require('pg');
 require('dotenv').config();
 
 // Setup PostgreSQL Connection
-const pool = new Pool({
+const db = new Pool({
 	host: process.env.DB_HOST,
 	user: process.env.DB_USER,
 	password: process.env.DB_PASSWORD,
@@ -13,7 +13,7 @@ const pool = new Pool({
 	ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
 });
 
-pool.connect()
+db.connect()
 	.then(() => console.log('✅ Connected to AWS RDS!'))
 	.catch(err => console.error('❌ Database Connection Error:', err));
 
