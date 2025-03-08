@@ -69,14 +69,6 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-## 🖤 Acknowledgements
-
-- Inspired by K-Pop and the amazing global fanbase.
-- Thanks to all contributors and testers for making Karina awesome.
-- Shoutout to the developers of [Discord.js](https://discord.js.org/) and all other libraries used in this project.
-
----
-
 ### ✨ Let the adventure begin!
 
 ---
