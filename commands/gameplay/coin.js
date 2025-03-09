@@ -3,9 +3,6 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { Pool } = require('pg');
 require('dotenv').config();
 
-
-
-
 // Setup PostgreSQL Connection
 const db = new Pool({
 	host: process.env.DB_HOST,
