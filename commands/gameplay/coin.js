@@ -25,6 +25,8 @@ db.connect()
 
 // Cooldown tracking
 const cooldowns = new Map();
+
+
 /**
  * CHANGE TIME FOR COOLDOWN
  *
