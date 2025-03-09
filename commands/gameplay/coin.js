@@ -23,7 +23,7 @@ db.connect()
 	.then(() => console.log('✅ Connected to AWS RDS!'))
 	.catch(err => console.error('❌ Database Connection Error:', err));
 
-// Cooldown tracking
+// Cooldown tracking * Can change after*
 const cooldowns = new Map();
 
 
@@ -32,6 +32,7 @@ const cooldowns = new Map();
  *
  * TODO: maybe make this a variable that can be changed in the .env file or somthing like that
  */
+
 const COOLDOWN_TIME = 5 * 60 * 1000; // 5 minutes (300,000 ms)
 
 module.exports = {
