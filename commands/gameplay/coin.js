@@ -3,20 +3,35 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { Pool } = require('pg');
 require('dotenv').config();
 
+
+
+
 // Setup PostgreSQL Connection
+const db = new Pool({
+	host: process.env.DB_HOST,
+	user: process.env.DB_USER,
+	password: process.env.DB_PASSWORD,
+	database: process.env.DB_NAME,
+	port: process.env.DB_PORT || 5432, // Default to 5432 if not provided
+	ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
+});
 
 
 /**
- * TODO: Change this to AWS RDS connection like in intializeProfile.js
+ * TODO: Make tables for users and photocards and whatever else i need.
+ * use history from NEON then scrap neon
  */
 
-
-const db = new Pool({ connectionString: process.env.DATABASE_URL });
+db.connect()
+	.then(() => console.log('✅ Connected to AWS RDS!'))
+	.catch(err => console.error('❌ Database Connection Error:', err));
 
 // Cooldown tracking
 const cooldowns = new Map();
 /**
  * CHANGE TIME FOR COOLDOWN
+ *
+ * TODO: maybe make this a variable that can be changed in the .env file or somthing like that
  */
 const COOLDOWN_TIME = 5 * 60 * 1000; // 5 minutes (300,000 ms)
 
