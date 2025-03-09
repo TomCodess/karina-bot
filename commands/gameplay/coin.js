@@ -16,7 +16,7 @@ const db = new Pool({
 
 /**
  * TODO: Make tables for users and photocards and whatever else i need.
- * use history from NEON then scrap neon
+ * use history from NEON then scrap 
  */
 
 db.connect()
