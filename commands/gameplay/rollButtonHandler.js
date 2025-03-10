@@ -17,8 +17,6 @@ module.exports = async function handleButtonClick(interaction, selectedCards, us
 	 * NEED TO ADD HERE LATER Logic for binder system.
 	 * Might need to abstract this function out as well 
 	 * Make new file, make new table on DB
-	 * USE pgAdmin to connect to the DB,
-	 * https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ConnectToPostgreSQLInstance.pgAdmin.html
 	 * Going to call invenotry system, binder system
 	 */
 

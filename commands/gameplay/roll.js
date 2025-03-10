@@ -96,7 +96,7 @@ module.exports = {
 
 		const selectedCards = getRandomCards();
 
-		// ---- Start sitching images together here ---
+		// *** Start sitching images together here ***
 		// Extract image paths
 		const imagePaths = selectedCards.map(card => card.image);
 		const outputFileName = `stitched_${Date.now()}.png`;
@@ -109,7 +109,7 @@ module.exports = {
 		// Attach image to message -- needed for await interaction.reply --
 		const file = new AttachmentBuilder(stitchedImagePath, { name: outputFileName });
 
-		// ---- End sitching images together here ---
+		// *** End sitching images together here ***
 
 		// Create embed for selection
 		const embed = new EmbedBuilder()
