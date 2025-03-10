@@ -31,10 +31,6 @@ module.exports = async function handleButtonClick(interaction, selectedCards, us
 
 	const message = await interaction.fetchReply();
 
-	// console.log('Selected Card:', selectedCard);
-	// console.log('Message ID:', message.id);
-	// console.log('User ID:', userId);
-
 	// **Listen for button interactions in the same function**
 	const filter = (btnInteraction) => {
 		return btnInteraction.isButton() && btnInteraction.message.id === message.id && btnInteraction.user.id === userId;
