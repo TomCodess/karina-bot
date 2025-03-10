@@ -39,7 +39,7 @@ module.exports = {
 			}
 
 			// Insert new user into database
-			await db.query('INSERT INTO users (user_id, username, created_at, last_claimed_coin) VALUES ($1, $2, NOW(), NOW())', [userId, username]);
+			await db.query('INSERT INTO users (user_id, username, created_at) VALUES ($1, $2, NOW())', [userId, username]);
 			return interaction.channel.send({ content: '🎉 Profile successfully initialized! You can now start collecting photocards.', ephemeral: true });
 		} catch (error) {
 			console.error('Database Error:', error);
