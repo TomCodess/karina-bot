@@ -1,3 +1,4 @@
+/* eslint-disable no-inline-comments */
 const { EmbedBuilder } = require('discord.js');
 const { Pool } = require('pg');
 require('dotenv').config();
