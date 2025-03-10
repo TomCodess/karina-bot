@@ -9,7 +9,15 @@ const handleButtonClick = require('./rollButtonHandler');
 
 require('dotenv').config();
 
-const db = new Pool({ connectionString: process.env.DATABASE_URL });
+// Setup PostgreSQL Connection
+const db = new Pool({
+	host: process.env.DB_HOST,
+	user: process.env.DB_USER,
+	password: process.env.DB_PASSWORD,
+	database: process.env.DB_NAME,
+	port: process.env.DB_PORT || 5432, // Default to 5432 if not provided
+	ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
+});
 const cooldowns = new Map();
 const ROLL_COOLDOWN = 300000; // 5 minutes
 
