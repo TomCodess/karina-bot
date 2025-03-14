@@ -140,7 +140,7 @@ module.exports = {
 		const message = await interaction.fetchReply();
 
 
-		// Store roll data in message metadata **UNUSED**
+		// Store roll data in message metadata **UNUSED might need later?s**
 		// const rollData = { selectedCards, message, userId };
 
 		// Automatically delete the stitched image after sending
@@ -151,7 +151,7 @@ module.exports = {
 			});
 		}, 5000);
 
-		// **Listen for button interactions in the same function**
+		// Listen for button interactions in the same function**
 		const filter = (btnInteraction) => {
 			console.log('FIRST Filtering button interactions...');
 			return btnInteraction.isButton() && btnInteraction.message.id === message.id && btnInteraction.user.id === userId;
