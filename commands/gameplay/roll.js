@@ -157,7 +157,7 @@ module.exports = {
 			return btnInteraction.isButton() && btnInteraction.message.id === message.id && btnInteraction.user.id === userId;
 		};
 
-		// 1-minute time to collect.
+		// 1-minute time to collect..
 		const collector = message.createMessageComponentCollector({ filter, time: 60000 });
 
 		// When a card is selected
