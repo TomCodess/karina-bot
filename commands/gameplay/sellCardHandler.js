@@ -23,6 +23,7 @@ module.exports = async function handleSellCard(interaction, selectedCard) {
      * ADD HERE LATER
      *  If the card is a rare card, sell it for 100 coins
      * if the card is a common card, sell it for 50 coins
+     * 
      */
 
 	// Generate random sell price (50-70 coins)
