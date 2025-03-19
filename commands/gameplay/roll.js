@@ -120,7 +120,7 @@ module.exports = {
 
 		const buttons = new ActionRowBuilder();
 
-        // Index is for selected card number
+        // Index is for selected card number, currentyl not used
 		selectedCards.forEach((card, index) => {
 
 			// embed.addFields({
