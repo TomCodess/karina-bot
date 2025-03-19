@@ -160,7 +160,7 @@ module.exports = {
 		// 1-minute time to collect
 		const collector = message.createMessageComponentCollector({ filter, time: 60000 });
 
-		// When a card is selected -> on collect is discord equivalent of on click.
+		// When a card is selected -> on collect is discord equivalent of on click
 		collector.on('collect', async (btnInteraction) => {
 			await handleButtonClick(btnInteraction, selectedCards, userId);
 
