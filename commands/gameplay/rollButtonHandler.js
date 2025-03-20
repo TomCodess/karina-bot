@@ -20,7 +20,6 @@ module.exports = async function handleButtonClick(interaction, selectedCards, us
 	 * Going to call invenotry system, binder system
 	 * 		- Add card to binder
 	 * 		- Remove card from binder
-	 * 		- View binder
 	 */
 
 	const sellButton = new ActionRowBuilder().addComponents(
