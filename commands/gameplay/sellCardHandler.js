@@ -27,7 +27,6 @@ module.exports = async function handleSellCard(interaction, selectedCard) {
      * if the card is a epic card, sell it for 150 coins
      * if the card is a legendary card, sell it for 200 coins
      * if the card is a mythic card, sell it for 250 coins
-     * if the card is a cosmic card, sell it for 300 coins
      */
 	// Generate random sell price (50-70 coins)
 	const sellPrice = Math.floor(Math.random() * 21) + 50;
