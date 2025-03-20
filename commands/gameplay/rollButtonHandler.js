@@ -19,6 +19,7 @@ module.exports = async function handleButtonClick(interaction, selectedCards, us
 	 * Make new file, make new table on DB
 	 * Going to call invenotry system, binder system
 	 * 		- Add card to binder
+	 * 		- Remove card from binder
 	 */
 
 	const sellButton = new ActionRowBuilder().addComponents(
