@@ -22,7 +22,7 @@ module.exports = async function handleSellCard(interaction, selectedCard) {
 	/**
      * ADD HERE LATER
      *  If the card is a rare card, sell it for 100 coins.
-     * if the card is a common card, sell it for 50 coins
+     * if the card is a common card, sell it for 50 coins.
      * if the card is a uncommon card, sell it for 75 coins.
      * if the card is a epic card, sell it for 150 coins.
      * if the card is a legendary card, sell it for 200 coins.
