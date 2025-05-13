@@ -23,6 +23,7 @@ module.exports = async function handleButtonClick(interaction, selectedCards, us
 	 * 		- View binder
 	 * 		- Sell card from binder
 	 * 		- View all cards in binder
+	 * 
 	 */
 
 	const sellButton = new ActionRowBuilder().addComponents(
