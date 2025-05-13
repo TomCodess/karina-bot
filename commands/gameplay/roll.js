@@ -143,7 +143,6 @@ module.exports = {
 
 		// Store roll data in message metadata **UNUSED might need later?s**
 		// const rollData = { selectedCards, message, userId };
-		
 
 		// Automatically delete the stitched image after sending
 		setTimeout(() => {
